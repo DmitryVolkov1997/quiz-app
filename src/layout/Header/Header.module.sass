@@ -1,0 +1,124 @@
+@import "assets/styles/mixins"
+@import "assets/styles/vars"
+
+.header
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  z-index: 999
+
+  display: grid
+  grid-template-columns: auto minmax(320px, 1440px) auto
+
+  &Row
+    display: grid
+    align-items: center
+    grid-column: 2/3
+    grid-template-columns: repeat(3, auto)
+    justify-content: space-between
+    padding: 0 30px
+    height: 80px
+
+  &Logo
+    width: 60px
+    height: 60px
+
+  &List
+    overflow: auto
+
+  &Scroll
+    display: flex
+    flex-wrap: wrap
+    column-gap: 27px
+    padding: 20px
+
+  &Link
+    @include family-raleway-bold
+    @include transition-all
+
+    &:hover
+      color: lighten(black, 30%)
+
+  &LinkActive
+    position: relative
+    display: inline-block
+    padding-bottom: 3px
+
+    &:after
+      content: ''
+      position: absolute
+      bottom: 0
+      left: 0
+      height: 3px
+      background-color: red
+      width: 100%
+
+  &BtnGroup
+    display: flex
+
+  &Mode
+    display: grid
+    justify-content: end
+    justify-items: end
+
+@media (max-width: 991px)
+  .header
+    &Row
+      grid-template-columns: repeat(2, auto)
+
+    &List
+      flex-direction: column
+      align-items: center
+      position: absolute
+      top: -100%
+      left: 0
+      right: 0
+      height: 50vh
+      z-index: 1000
+      margin-top: 5px
+      overflow: auto
+      opacity: 0
+      visibility: hidden
+      @include transition-all
+
+    &ListActive
+      opacity: 1
+      visibility: visible
+      top: 100%
+
+    &Item
+      display: block
+      width: 100%
+      text-align: center
+
+    &Link
+      display: block
+      padding: 12px
+
+
+    &LinkActive
+      background-color: $color-teal
+      border-radius: 10px
+
+      &:after
+        display: none
+
+  .light
+    background-color: white
+
+    .headerLinkActive
+      color: white
+
+  .dark
+    background-color: $color-gray
+
+    .headerLinkActive
+      color: white
+      background-color: $color-red
+
+
+
+
+
+
