@@ -4,11 +4,20 @@
 @import "assets/styles/mixins"
 
 body
-  @include text-lg()
-  @include family-raleway-medium()
+  @include text-lg
+  @include family-raleway-medium
+
+  &.no-scroll
+    overflow: hidden
 
 a
-  @include family-raleway-medium()
+  @include family-raleway-medium
+
+select,
+input
+  @include family-raleway-medium
+
+
 
 
 

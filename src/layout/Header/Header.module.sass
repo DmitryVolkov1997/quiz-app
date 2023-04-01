@@ -11,6 +11,12 @@
   display: grid
   grid-template-columns: auto minmax(320px, 1440px) auto
 
+  &Light
+    background-color: white
+
+  &Dark
+    background-color: $color-gray
+
   &Row
     display: grid
     align-items: center
@@ -56,6 +62,7 @@
 
   &BtnGroup
     display: flex
+    column-gap: 7px
 
   &Mode
     display: grid
@@ -74,9 +81,8 @@
       top: -100%
       left: 0
       right: 0
-      height: 50vh
+      height: 100vh
       z-index: 1000
-      margin-top: 5px
       overflow: auto
       opacity: 0
       visibility: hidden

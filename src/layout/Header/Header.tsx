@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import styles from './Header.module.sass'
 import cn from 'classnames'
 import {Box, Button, Image, ListItem, UnorderedList, useColorMode} from '@chakra-ui/react'
@@ -15,9 +15,22 @@ export const Header = ({className, ...props}: HeaderProps) => {
 	const [isLargerThan991] = useMediaQuery('(max-width: 991px)')
 	const [isShowMenu, setShowMenu] = useState(false)
 
+	useEffect(() => {
+		if (isShowMenu) {
+			document.body.className = 'no-scroll'
+		}
+
+		return () => {
+			document.body.classList.remove('no-scroll')
+		}
+	}, [isShowMenu])
+
 	return (
 		<Box
-			className={cn(styles.header, className)}
+			className={cn(styles.header, className, {
+				[styles.headerLight]: colorMode === 'light',
+				[styles.headerDark]: colorMode === 'dark'
+			})}
 			as="header"
 			boxShadow="base"
 			rounded="md"
@@ -45,7 +58,9 @@ export const Header = ({className, ...props}: HeaderProps) => {
 							>
 								<NavLink
 									className={({isActive}) => isActive ? cn(styles.headerLinkActive, styles.headerLink) : styles.headerLink}
-									to={el.to}>
+									to={el.to}
+									onClick={() => setShowMenu(false)}
+								>
 									{el.label}
 								</NavLink>
 							</ListItem>

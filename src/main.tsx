@@ -12,9 +12,12 @@ import {
 	QueryClient,
 	QueryClientProvider,
 } from '@tanstack/react-query'
+import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import theme from './theme'
-
 const queryClient = new QueryClient()
+import axios from 'axios'
+const API_URL = 'http://localhost:3004'
+axios.defaults.baseURL = API_URL
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
@@ -22,6 +25,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 			<QueryClientProvider client={queryClient}>
 				<ChakraProvider>
 					<ColorModeScript initialColorMode={theme.config.initialColorMode}/>
+					<ReactQueryDevtools initialIsOpen={false}/>
 					<App/>
 				</ChakraProvider>
 			</QueryClientProvider>

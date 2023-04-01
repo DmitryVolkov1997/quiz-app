@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "component": "generate-react component",
     "page": "generate-react component --type=page",
-    "layout": "generate-react component --type=layout"
+    "layout": "generate-react component --type=layout",
+    "start": "concurrently \"npm run dev\" \"npm run server\"",
+    "server": "json-server --watch db.json --port 3004"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.18",
@@ -21,9 +23,12 @@
     "@reduxjs/toolkit": "^1.9.3",
     "@tanstack/react-query": "^4.28.0",
     "@tanstack/react-query-devtools": "^4.28.0",
+    "axios": "^1.3.4",
     "classnames": "^2.3.2",
+    "concurrently": "^8.0.1",
     "framer-motion": "^10.10.0",
     "generate-react-cli": "^8.3.0",
+    "json-server": "^0.17.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.9",
