@@ -1,13 +1,13 @@
 import {useQuery} from '@tanstack/react-query'
-import {FormService} from '../services/form.service'
 import {useToast} from '@chakra-ui/react'
+import {RegionService} from 'services'
 
-export const useFormQuery = () => {
+export const useRegionsQuery = () => {
 	const toast = useToast()
 
 	return useQuery({
-		queryFn: () => FormService.getSocialStatuses(),
-		queryKey: ['social-statuses'],
+		queryFn: () => RegionService.getRegions(),
+		queryKey: ['regions'],
 		select: ({data}) => {
 			return data
 		},

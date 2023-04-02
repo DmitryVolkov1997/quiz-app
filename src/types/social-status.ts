@@ -3,3 +3,6 @@ export type SocialStatus = {
 	label: string
 }
 
+export type SocialStatusResponse = {
+	data: SocialStatus[]
+}

@@ -1,9 +1,8 @@
-type City = {
+export type Region =  {
 	name: string
 	id: number
 }
 
-export type Region = City & {
-	cities: City[]
+export type RegionResponse = {
+	data: Region[]
 }
-
