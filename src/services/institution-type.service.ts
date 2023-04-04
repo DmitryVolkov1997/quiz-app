@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {InstitutionTypeResponse} from 'types/institution-type'
+import {InstitutionTypeResponse} from 'types'
 
 export const InstitutionTypeService = {
 	async getInstitutionTypes(): Promise<InstitutionTypeResponse> {

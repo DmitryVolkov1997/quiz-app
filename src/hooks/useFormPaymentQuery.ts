@@ -1,14 +1,13 @@
 import {useQuery} from '@tanstack/react-query'
 import {useToast} from '@chakra-ui/react'
-import {EducationalInstitutionsService} from 'services'
+import {PaymentService} from 'services'
 
-export const useEducationalInstitutions = (cityId: number, type: string) => {
+export const useFormPaymentQuery = () => {
 	const toast = useToast()
 
 	return useQuery({
-		queryFn: () => EducationalInstitutionsService.getEducationalInstitutions(cityId, type),
-		queryKey: ['cities', cityId, type],
-		enabled: !!cityId && !!type,
+		queryFn: () => PaymentService.getFormPayments(),
+		queryKey: ['payments'],
 		select: ({data}) => {
 			return data
 		},

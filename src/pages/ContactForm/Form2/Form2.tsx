@@ -6,17 +6,27 @@ import {
 	useRegionsQuery,
 	useCitiesQuery,
 	useInstitutionsTypesQuery,
-	useEducationalInstitutions
+	useEducationalInstitutions, useProgramsGroupQuery, useFormStudiesQuery
 } from 'hooks'
+import {FieldErrors, UseFormRegister} from 'react-hook-form'
+import {FormValues} from 'types'
 
-export const Form2 = () => {
+export interface Form2Props {
+	register: UseFormRegister<FormValues>;
+	errors: FieldErrors<FormValues>
+}
+
+export const Form2 = ({register, errors}:Form2Props) => {
 	const [regionId, setRegionId] = useState(0)
 	const [institutionType, setInstitutionType] = useState('')
+	const [formType, setFormType] = useState('')
 	const {data: statuses, isSuccess: isStatusesSuccess} = useSocialStatusesQuery()
 	const {data: regions, isSuccess: isRegionsSuccess} = useRegionsQuery()
 	const {data: cities, isSuccess: isCitiesSuccess} = useCitiesQuery(regionId)
 	const {data: institutionsTypes, isSuccess: isInstitutionsTypes} = useInstitutionsTypesQuery()
 	const {data: institutions, isSuccess: isInstitutionsSuccess} = useEducationalInstitutions(regionId, institutionType)
+	const {data: formStudies, isSuccess: isFormStudiesSuccess} = useFormStudiesQuery()
+	const {data: programs, isSuccess: isProgramsSuccess} = useProgramsGroupQuery(formType)
 
 	const handleRegionChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		const value = e.target.value
@@ -32,18 +42,27 @@ export const Form2 = () => {
 		}
 	}
 
+	const handleFormStudiesChange = (e: ChangeEvent<HTMLSelectElement>) => {
+		const value = e.target.value
+		if (value) {
+			setFormType(value)
+		}
+	}
+
 	return (
 		<Box>
 			<Heading w="100%"
 					 textAlign="center"
 					 fontWeight="normal"
 					 mb="2%">
-				Сведения о пользователе
+				Регистрация пользователя
 			</Heading>
 
 			<Select
 				placeholder="Социальный статус"
-				mb={4}>
+				mb={4}
+				{...register("socialStatus")}
+			>
 				{
 					isStatusesSuccess && statuses.map((status, idx) => (
 						<option key={idx}>{status.label}</option>
@@ -102,9 +121,8 @@ export const Form2 = () => {
 			</Select>
 
 			<Select
-				placeholder="Вид учебного заведения"
+				placeholder="Оқу орны (Учебное заведение)"
 				mb={4}
-				onChange={handleInstitutionTypeChange}
 			>
 				{
 					isInstitutionsSuccess && institutions.map((el) => (
@@ -117,6 +135,38 @@ export const Form2 = () => {
 					))
 				}
 			</Select>
+
+			<Select
+				placeholder="Оқу түрі (Форма обучения)"
+				mb={4}
+				onChange={handleFormStudiesChange}
+			>
+				{
+					isFormStudiesSuccess && formStudies.map((el, idx) => (
+						<option
+							key={idx}
+							value={el.type}
+						>
+							{el.label}
+						</option>
+					))
+				}
+			</Select>
+
+			<Select
+				placeholder="Болжамдық білім беру бағдарламасы (Предполагаемая группа образовательных программ)"
+				mb={4}
+			>
+				{
+					isProgramsSuccess && programs.map(el => (
+						<option key={el.id} value={el.id}>
+							{el.name}
+						</option>
+					))
+				}
+			</Select>
+
+
 		</Box>
 	)
 }

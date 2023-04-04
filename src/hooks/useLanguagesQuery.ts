@@ -1,14 +1,13 @@
-import {useQuery} from '@tanstack/react-query'
 import {useToast} from '@chakra-ui/react'
-import {CityService} from 'services'
+import {useQuery} from '@tanstack/react-query'
+import {LanguageService} from '../services'
 
-export const useCitiesQuery = (regionId: number) => {
+export const useLanguagesQuery = () => {
 	const toast = useToast()
 
 	return useQuery({
-		queryFn: () => CityService.getCities(regionId),
-		queryKey: ['cities', regionId],
-		enabled:!!regionId,
+		queryFn: () => LanguageService.getLanguages(),
+		queryKey: ['languages'],
 		select: ({data}) => {
 			return data
 		},

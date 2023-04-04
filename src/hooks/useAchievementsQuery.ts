@@ -1,14 +1,13 @@
 import {useQuery} from '@tanstack/react-query'
 import {useToast} from '@chakra-ui/react'
-import {EducationalInstitutionsService} from 'services'
+import { AchievementService } from 'services'
 
-export const useEducationalInstitutions = (cityId: number, type: string) => {
+export const useAchievementsQuery = () => {
 	const toast = useToast()
 
 	return useQuery({
-		queryFn: () => EducationalInstitutionsService.getEducationalInstitutions(cityId, type),
-		queryKey: ['cities', cityId, type],
-		enabled: !!cityId && !!type,
+		queryFn: () => AchievementService.getAchievements(),
+		queryKey: ['achievements'],
 		select: ({data}) => {
 			return data
 		},

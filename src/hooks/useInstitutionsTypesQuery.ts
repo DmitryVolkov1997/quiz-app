@@ -1,6 +1,7 @@
 import {useQuery} from '@tanstack/react-query'
-import {InstitutionTypeService} from '../services/institution-type.service'
+
 import {useToast} from '@chakra-ui/react'
+import { InstitutionTypeService } from 'services'
 
 
 export const useInstitutionsTypesQuery = () => {

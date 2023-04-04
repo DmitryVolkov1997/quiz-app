@@ -1,14 +1,13 @@
 import {useQuery} from '@tanstack/react-query'
+import {FormStudyService} from 'services'
 import {useToast} from '@chakra-ui/react'
-import {EducationalInstitutionsService} from 'services'
 
-export const useEducationalInstitutions = (cityId: number, type: string) => {
+export const useFormStudiesQuery = () => {
 	const toast = useToast()
 
 	return useQuery({
-		queryFn: () => EducationalInstitutionsService.getEducationalInstitutions(cityId, type),
-		queryKey: ['cities', cityId, type],
-		enabled: !!cityId && !!type,
+		queryFn: () => FormStudyService.getFormStudies(),
+		queryKey: ['form-studies'],
 		select: ({data}) => {
 			return data
 		},
