@@ -1,13 +1,12 @@
 import React from 'react'
 import styles from 'index.sass'
-import { ContactForm } from 'pages'
-import {useForm} from 'react-hook-form'
+import { FormPage } from 'pages'
 
 
 export const HomePage = () => {
 	return (
 		<>
-			<ContactForm/>
+			<FormPage/>
 		</>
 	)
 }

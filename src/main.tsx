@@ -16,19 +16,23 @@ import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import theme from './theme'
 const queryClient = new QueryClient()
 import axios from 'axios'
+import {Provider} from 'react-redux'
+import {store} from 'store/store'
 const API_URL = 'http://localhost:3004'
 axios.defaults.baseURL = API_URL
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
-		<BrowserRouter>
-			<QueryClientProvider client={queryClient}>
-				<ChakraProvider>
-					<ColorModeScript initialColorMode={theme.config.initialColorMode}/>
-					<ReactQueryDevtools initialIsOpen={false}/>
-					<App/>
-				</ChakraProvider>
-			</QueryClientProvider>
-		</BrowserRouter>
+		<Provider store={store}>
+			<BrowserRouter>
+				<QueryClientProvider client={queryClient}>
+					<ChakraProvider>
+						<ColorModeScript initialColorMode={theme.config.initialColorMode}/>
+						<ReactQueryDevtools initialIsOpen={false}/>
+						<App/>
+					</ChakraProvider>
+				</QueryClientProvider>
+			</BrowserRouter>
+		</Provider>
 	</React.StrictMode>,
 )
