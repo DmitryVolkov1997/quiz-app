@@ -34,7 +34,9 @@ export const StepOne = ({register, errors}: StepOneProps) => {
 							errors[el.name] && (
 								<Box
 									as="strong"
-									color="red">
+									color="red"
+									fontWeight="medium"
+								>
 									{errors[el.name]?.message}
 								</Box>
 							)

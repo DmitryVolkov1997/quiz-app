@@ -48,7 +48,9 @@ export const RegionSelect = ({register, errors}: RegionSelectProps) => {
 			{errors.regions && errors.regions.message && (
 				<Box
 					as="strong"
-					color="red">
+					color="red"
+					fontWeight="medium"
+				>
 					{errors.regions.message}
 				</Box>
 			)}

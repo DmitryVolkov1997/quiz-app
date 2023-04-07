@@ -1,37 +1,38 @@
 import React, {ChangeEvent} from 'react'
-import {useInstitutions} from 'hooks'
-import {Box, FormControl, Select} from '@chakra-ui/react'
 import {FormProps} from 'types'
+import {Box, FormControl, Select} from '@chakra-ui/react'
+import {useFormStudies} from 'hooks'
 import {useAppDispatch} from 'store/redux-hooks'
-import {setInstitutionType} from 'store/slices/institutionSlice'
+import { setFormStudy } from 'store/slices/formStudy.slice'
 
-interface InstitutionSelectProps extends FormProps {}
+interface FormStudySelectProps extends FormProps {
 
-export const InstitutionSelect = ({register, errors}: InstitutionSelectProps) => {
-	const {data, isSuccess} = useInstitutions()
+}
+
+export const FormStudySelect = ({register, errors}: FormStudySelectProps) => {
+	const {data, isSuccess} = useFormStudies()
 	const dispatch = useAppDispatch()
 
-	const handleChangeInstitutionType = (e: ChangeEvent<HTMLSelectElement>) => {
+	const handleChangeFormStudy = (e: ChangeEvent<HTMLSelectElement>) => {
 		const selectedOption = e.target.options[e.target.selectedIndex]
 
 		if (selectedOption.dataset && selectedOption.dataset.name) {
 			const optionName = selectedOption.dataset.name
-			dispatch(setInstitutionType(optionName))
-
+			dispatch(setFormStudy(optionName))
 		} else {
-			dispatch(setInstitutionType(''))
+			dispatch(setFormStudy(''))
 		}
 	}
 
 	return (
 		<FormControl mb="2%">
 			<Select
-				placeholder="Вид учебного заведения"
+				placeholder="Оқу түрі (Форма обучения)"
 				size="md"
-				{...register("institutionType", {
+				{...register("formStudy", {
 					required: "Обязательное поле"
 				})}
-				onChange={handleChangeInstitutionType}
+				onChange={handleChangeFormStudy}
 			>
 				{isSuccess && data.map((el, idx) => (
 					<option
@@ -44,13 +45,13 @@ export const InstitutionSelect = ({register, errors}: InstitutionSelectProps) =>
 				))}
 			</Select>
 
-			{errors.institutionType && errors.institutionType.message && (
+			{errors.formStudy && errors.formStudy.message && (
 				<Box
 					as="strong"
 					color="red"
 					fontWeight="medium"
 				>
-					{errors.institutionType.message}
+					{errors.formStudy.message}
 				</Box>
 			)}
 		</FormControl>

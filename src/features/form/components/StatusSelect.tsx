@@ -30,7 +30,9 @@ export const StatusSelect = ({register, errors}: StatusSelectProps) => {
 			{errors.statuses && (
 				<Box
 					as="strong"
-					color="red">
+					color="red"
+					fontWeight="medium"
+				>
 					{errors.statuses.message}
 				</Box>
 			)}

@@ -51,7 +51,9 @@ export const CitySelect = ({register, errors}: CitySelectProps) => {
 			{errors.cities && errors.cities.message && (
 				<Box
 					as="strong"
-					color="red">
+					color="red"
+					fontWeight="medium"
+				>
 					{errors.cities.message}
 				</Box>
 			)}
