@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styles from './FormPage.module.sass'
 import {Layout} from 'layout/Layout'
-import { ContactForm } from 'features'
+import {ContactForm} from 'features'
 import {Box} from '@chakra-ui/react'
 
 export const FormPage = () => {

@@ -1,72 +1,40 @@
 import React from 'react'
 import styles from './ContactForm.module.sass'
 import {Box, Button} from '@chakra-ui/react'
-import {StepOne, StepTwo} from 'features'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {FormDataTypes} from 'types'
 import {
-	AchievementSelect,
-	ConsultantDepartmentSelect, EducationalProgram,
-	EducationInstitutionSelect,
-	FormPaymentSelect, FormStudySelect,
-	LanguageSelect, Question
+	Multistep
 } from './components'
 
 export const ContactForm = () => {
-	const {register, handleSubmit, formState: {errors}} = useForm<FormDataTypes>({
+	const {register, handleSubmit, formState: {errors, isValid, isSubmitSuccessful}, reset} = useForm<FormDataTypes>({
 		mode: "onBlur"
 	})
 
-	const submit: SubmitHandler<FormDataTypes> = (data) => {
+	const onSubmit: SubmitHandler<FormDataTypes> = (data) => {
 		console.log(data)
 	}
 
 	return (
 		<Box
 			as="form"
-			onSubmit={handleSubmit(submit)}
-			w="800px"
+			onSubmit={handleSubmit(onSubmit)}
+			borderWidth="1px"
+			rounded="lg"
+			shadow="1px 1px 3px rgba(0,0,0,0.3)"
+			maxWidth={800}
+			width="100%"
+			p={6}
+			m="10px auto"
 		>
-			<StepOne
+			<Multistep
 				register={register}
 				errors={errors}
+				isValid={isValid}
+				isSubmitSuccessful={isSubmitSuccessful}
 			/>
-			<StepTwo
-				register={register}
-				errors={errors}
-			/>
-			<EducationInstitutionSelect
-				register={register}
-				errors={errors}
-			/>
-			<FormStudySelect
-				register={register}
-				errors={errors}
-			/>
-			<EducationalProgram
-				register={register}
-				errors={errors}/>
-			<AchievementSelect
-				register={register}
-				errors={errors}
-			/>
-			<FormPaymentSelect
-				register={register}
-				errors={errors}
-			/>
-			<LanguageSelect
-				register={register}
-				errors={errors}
-			/>
-			<ConsultantDepartmentSelect
-				register={register}
-				errors={errors}
-			/>
-			<Question
-				register={register}
-				errors={errors}
-			/>
-			<Button type="submit">Submit</Button>
+			{/*<Button type="submit">Submit</Button>*/}
 		</Box>
 	)
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Box, FormControl, Heading, Input} from '@chakra-ui/react'
-import {inputs, registerName} from 'features'
-import {FormDataTypes, FormProps} from 'types'
+import {inputs, registerName} from 'features/index'
+import {FormDataTypes, FormProps} from 'types/index'
 import {RegisterOptions} from 'react-hook-form'
 
 interface StepOneProps extends FormProps {
