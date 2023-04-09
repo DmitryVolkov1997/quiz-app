@@ -77,7 +77,7 @@ export const Multistep = ({register, errors, isValid, isSubmitSuccessful, isLoad
 
 				{step === 3 ? (
 					<Button
-						px={10}
+						px={14}
 						colorScheme={isValid ? 'green' : "red"}
 						variant="solid"
 						type="submit"
@@ -92,16 +92,6 @@ export const Multistep = ({register, errors, isValid, isSubmitSuccessful, isLoad
 									isClosable: true,
 									position: 'top'
 								})
-							} else if (errors || !isValid) {
-								toast({
-									title: 'Проверьте корректность заполнения полей формы',
-									status: 'error',
-									duration: 5000,
-									isClosable: true,
-									position: 'top'
-								})
-							} else {
-								setIsLoading(true)
 							}
 						}}>
 						Зарегистрироваться
