@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {Dispatch, SetStateAction, useState} from 'react'
 import {Box, Button, ButtonGroup, Flex, Progress, useToast} from '@chakra-ui/react'
 import {FormProps} from 'types'
 import {StepOne, StepTwo, StepThree} from 'features'
@@ -7,9 +7,11 @@ import {ArrowBackIcon, ArrowForwardIcon} from '@chakra-ui/icons'
 interface MultistepProps extends FormProps {
 	isValid: boolean
 	isSubmitSuccessful: boolean
+	isLoading: boolean
+	setIsLoading: Dispatch<SetStateAction<boolean>>
 }
 
-export const Multistep = ({register, errors, isValid, isSubmitSuccessful}: MultistepProps) => {
+export const Multistep = ({register, errors, isValid, isSubmitSuccessful, isLoading, setIsLoading}: MultistepProps) => {
 	const toast = useToast()
 	const [step, setStep] = useState(1)
 	const [progress, setProgress] = useState(33.33)
@@ -76,17 +78,31 @@ export const Multistep = ({register, errors, isValid, isSubmitSuccessful}: Multi
 				{step === 3 ? (
 					<Button
 						px={10}
-						colorScheme="red"
+						colorScheme={isValid ? 'green' : "red"}
 						variant="solid"
 						type="submit"
+						isLoading={isLoading}
+						disabled={isLoading}
 						onClick={() => {
-							toast({
-								title: isSubmitSuccessful ? 'Спасибо за регистрацию!' : 'Упс что-то пошло не так',
-								status: isSubmitSuccessful ? 'success' : 'error',
-								duration: 3000,
-								isClosable: true,
-								position: 'top'
-							})
+							if (isSubmitSuccessful) {
+								toast({
+									title: 'Спасибо за регистрацию!',
+									status: 'success',
+									duration: 5000,
+									isClosable: true,
+									position: 'top'
+								})
+							} else if (errors || !isValid) {
+								toast({
+									title: 'Проверьте корректность заполнения полей формы',
+									status: 'error',
+									duration: 5000,
+									isClosable: true,
+									position: 'top'
+								})
+							} else {
+								setIsLoading(true)
+							}
 						}}>
 						Зарегистрироваться
 					</Button>

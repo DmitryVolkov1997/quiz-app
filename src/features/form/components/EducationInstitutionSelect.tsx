@@ -21,7 +21,7 @@ export const EducationInstitutionSelect = ({register, errors}: EducationInstitut
 					required: "Обязательное поле"
 				})}
 			>
-				{isSuccess && data.map(el => (
+				{isSuccess && Object.values(data).map(el => (
 					<option
 						key={el.id}
 						value={el.name}

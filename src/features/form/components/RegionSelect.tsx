@@ -34,7 +34,7 @@ export const RegionSelect = ({register, errors}: RegionSelectProps) => {
 				})}
 				onChange={handleRegion}
 			>
-				{isSuccess && data.map((el) => (
+				{isSuccess && Object.values(data).map((el) => (
 					<option
 						key={el.id}
 						value={el.name}

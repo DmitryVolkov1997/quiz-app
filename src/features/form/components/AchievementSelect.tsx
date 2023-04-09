@@ -18,7 +18,7 @@ export const AchievementSelect = ({register, errors}: AchievementSelectProps) =>
 					required: "Обязательное поле"
 				})}
 			>
-				{isSuccess && data.map((el, idx) => (
+				{isSuccess && Object.values(data).map((el, idx) => (
 					<option
 						key={idx}
 						value={el.value}

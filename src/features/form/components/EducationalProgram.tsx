@@ -19,7 +19,7 @@ export const EducationalProgram = ({register, errors}: EducationalProgramProps) 
 					required: "Обязательное поле"
 				})}
 			>
-				{isSuccess && data.map((el, idx) => (
+				{isSuccess && Object.values(data).map((el, idx) => (
 					<option
 						key={el.id}
 						value={el.name}

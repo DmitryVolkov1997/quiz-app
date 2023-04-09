@@ -18,7 +18,7 @@ export const StatusSelect = ({register, errors}: StatusSelectProps) => {
 					required: "Обязательное поле"
 				})}
 			>
-				{isSuccess && data.map((el, idx) => (
+				{isSuccess && Object.values(data).map((el, idx) => (
 					<option
 						key={idx}
 						value={el.value}>

@@ -18,3 +18,25 @@ export type FormDataTypes = {
 	educationalProgram: string
 	question: string
 }
+
+export type FormDataTypesRus = {
+	"Имя": string
+	"Фамилия": string
+	"Отчество": string
+	"Email": string
+	"Телефон": string
+	"Год рождения": Date
+	"Социальный статус": string
+	"Регион": string
+	"Город": string
+	"Вид учебного заведения": string
+	"Учебное заведение": string
+	"Форма обучения": string
+	"Образовательная программа": string
+	"Награды и достижения": string
+	"Форма оплаты": string
+	"Язык обучения": string
+	"Кафедра консультант": string
+	"Вопрос": string
+}
+

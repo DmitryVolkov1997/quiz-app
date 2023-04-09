@@ -33,7 +33,7 @@ export const InstitutionSelect = ({register, errors}: InstitutionSelectProps) =>
 				})}
 				onChange={handleChangeInstitutionType}
 			>
-				{isSuccess && data.map((el, idx) => (
+				{isSuccess && Object.values(data).map((el, idx) => (
 					<option
 						key={idx}
 						value={el.value}

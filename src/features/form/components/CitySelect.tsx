@@ -3,17 +3,15 @@ import {Box, FormControl, Select} from '@chakra-ui/react'
 import {useCities} from 'hooks'
 import {FormProps} from 'types'
 import {useAppDispatch, useAppSelector} from 'store/redux-hooks'
-import {setRegionId} from 'store/slices/regionSlice'
 import {setCityId} from 'store/slices/citySlice'
 
-interface CitySelectProps extends FormProps {
-
-}
+interface CitySelectProps extends FormProps {}
 
 export const CitySelect = ({register, errors}: CitySelectProps) => {
 	const {regionId} = useAppSelector(state => state.region)
 	const {data, isSuccess} = useCities(regionId)
 	const dispatch = useAppDispatch()
+
 
 	const handleChangeCity = (e: ChangeEvent<HTMLSelectElement>) => {
 		const selectedOption = e.target.options[e.target.selectedIndex]
@@ -37,7 +35,7 @@ export const CitySelect = ({register, errors}: CitySelectProps) => {
 				})}
 				onChange={handleChangeCity}
 			>
-				{isSuccess && data.map((el) => (
+				{isSuccess && Object.values(data).map((el) => (
 					<option
 						key={el.id}
 						value={el.name}

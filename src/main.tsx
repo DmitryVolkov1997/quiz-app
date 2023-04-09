@@ -18,7 +18,8 @@ const queryClient = new QueryClient()
 import axios from 'axios'
 import {Provider} from 'react-redux'
 import {store} from 'store/store'
-const API_URL = 'http://localhost:3004'
+// const API_URL = 'http://localhost:3004'
+const API_URL = 'https://portfolio-db722-default-rtdb.firebaseio.com'
 axios.defaults.baseURL = API_URL
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
