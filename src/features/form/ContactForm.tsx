@@ -7,17 +7,18 @@ import {
 	Multistep
 } from './components'
 import {transformObject} from 'utils'
-import {useAppDispatch} from 'store/redux-hooks'
+import {useAppDispatch, useAppSelector} from 'store/redux-hooks'
 import {setStudent} from 'store/slices/studentSlice'
 import {useMutation, useQueryClient} from '@tanstack/react-query'
 import {submitFormData} from 'services'
 import axios from 'axios'
+import {setProgress, setStep} from 'store/slices/contactFormSlice'
 
 export const ContactForm = () => {
 	const {
 		register,
 		handleSubmit,
-		formState: {errors, isValid, isSubmitSuccessful},
+		formState: {errors, isValid},
 		reset
 	} = useForm<FormDataTypes>({
 		mode: "onBlur"
@@ -34,6 +35,24 @@ export const ContactForm = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [isUser, setIsUser] = useState(true)
 
+	const resetForm = () => {
+		reset()
+		dispatch(setStep(1))
+		dispatch(setProgress(33.33))
+	}
+
+	const timeoutForm = () => {
+		const timeout = setTimeout(() => {
+			if (isValid) {
+				resetForm()
+			}
+		}, 5000)
+
+		if (!isValid) {
+			clearTimeout(timeout)
+		}
+	}
+
 	const onSubmit: SubmitHandler<FormDataTypes> = async (data) => {
 		if (isLoading) {
 			return
@@ -49,26 +68,28 @@ export const ContactForm = () => {
 					title: "Ошибка",
 					description: "Пользователь с такими данными уже существует",
 					status: 'error',
-					duration: 7000,
+					duration: 8000,
 					isClosable: true,
 					position: "top"
 				})
 
 				setIsUser(true)
+
+				timeoutForm()
+
 			} else {
 				setIsUser(false)
 				const applicantData = transformObject(data)
 				dispatch(setStudent(applicantData))
 
 				mutateAsync(applicantData).then(r => console.log(r))
+				timeoutForm()
 			}
 		} catch (e) {
 			console.log(e)
 		} finally {
 			setIsLoading(false)
 		}
-
-		reset()
 	}
 
 	return (

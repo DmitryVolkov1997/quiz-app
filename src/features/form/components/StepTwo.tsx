@@ -7,6 +7,7 @@ import {
 	InstitutionSelect,
 	EducationInstitutionSelect, FormStudySelect, EducationalProgram
 } from 'features/form/components/index'
+import {Heading} from '@chakra-ui/react'
 
 interface StepTwoProps extends FormProps {
 }
@@ -15,6 +16,14 @@ export const StepTwo = ({register, errors}: StepTwoProps) => {
 
 	return (
 		<>
+			<Heading
+				w="100%"
+				textAlign="center"
+				fontWeight="medium"
+				mb="2%">
+				Регистрация
+			</Heading>
+
 			<StatusSelect register={register} errors={errors}/>
 			<RegionSelect register={register} errors={errors}/>
 			<CitySelect register={register} errors={errors}/>

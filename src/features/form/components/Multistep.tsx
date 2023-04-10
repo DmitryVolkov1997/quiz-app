@@ -1,8 +1,10 @@
-import React, {Dispatch, SetStateAction, useState} from 'react'
+import React from 'react'
 import {Box, Button, ButtonGroup, Flex, Progress, useToast} from '@chakra-ui/react'
 import {FormProps} from 'types'
 import {StepOne, StepTwo, StepThree} from 'features'
 import {ArrowBackIcon, ArrowForwardIcon} from '@chakra-ui/icons'
+import {useAppDispatch, useAppSelector} from 'store/redux-hooks'
+import {setNextStep, setPrevStep, setProgress, setStep} from 'store/slices/contactFormSlice'
 
 interface MultistepProps extends FormProps {
 	isValid: boolean
@@ -12,8 +14,8 @@ interface MultistepProps extends FormProps {
 
 export const Multistep = ({register, errors, isValid, isSubmitSuccessful, isLoading}: MultistepProps) => {
 	const toast = useToast()
-	const [step, setStep] = useState(1)
-	const [progress, setProgress] = useState(33.33)
+	const dispatch = useAppDispatch()
+	const {step, progress} = useAppSelector(state => state.contactForm)
 
 	return (
 		<Box>
@@ -45,8 +47,8 @@ export const Multistep = ({register, errors, isValid, isSubmitSuccessful, isLoad
 				mt="5%" w="100%">
 				<Flex w="100%" justifyContent="space-between">
 					<Button onClick={() => {
-						setStep(step - 1)
-						setProgress(progress - 33.33)
+						dispatch(setPrevStep())
+						dispatch(setProgress(progress - 33.33))
 					}}
 							isDisabled={step === 1}
 							colorScheme="teal"
@@ -60,8 +62,8 @@ export const Multistep = ({register, errors, isValid, isSubmitSuccessful, isLoad
 					{
 						step === 3 ? null : (
 							<Button onClick={() => {
-								setStep(step + 1)
-								setProgress(progress + 33.33)
+								dispatch(setNextStep())
+								dispatch(setProgress(progress + 33.33))
 							}}
 									isDisabled={step === 3 || !isValid}
 									colorScheme="teal"
@@ -83,13 +85,13 @@ export const Multistep = ({register, errors, isValid, isSubmitSuccessful, isLoad
 						isLoading={isLoading}
 						disabled={isLoading}
 						onClick={() => {
-							if (!isSubmitSuccessful) {
+							if (isSubmitSuccessful) {
 								toast({
 									title: 'Спасибо за регистрацию!',
 									status: 'success',
-									duration: 5000,
+									duration: 7000,
 									isClosable: true,
-									position: 'top'
+									position: 'top',
 								})
 							}
 						}}>

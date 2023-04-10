@@ -1,5 +1,5 @@
 import React from 'react'
-import {Box} from '@chakra-ui/react'
+import {Box, Heading} from '@chakra-ui/react'
 import {
 	AchievementSelect,
 	ConsultantDepartmentSelect,
@@ -13,7 +13,15 @@ interface StepThreeProps extends FormProps {
 
 export const StepThree = ({register, errors}: StepThreeProps) => {
 	return (
-		<Box>
+		<>
+			<Heading
+				w="100%"
+				textAlign="center"
+				fontWeight="medium"
+				mb="2%">
+				Регистрация
+			</Heading>
+
 			<AchievementSelect
 				register={register}
 				errors={errors}
@@ -34,7 +42,7 @@ export const StepThree = ({register, errors}: StepThreeProps) => {
 				register={register}
 				errors={errors}
 			/>
-		</Box>
+		</>
 	)
 }
 

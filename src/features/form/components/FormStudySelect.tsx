@@ -3,7 +3,7 @@ import {FormProps} from 'types'
 import {Box, FormControl, Select} from '@chakra-ui/react'
 import {useFormStudies} from 'hooks'
 import {useAppDispatch} from 'store/redux-hooks'
-import { setFormStudy } from 'store/slices/formStudy.slice'
+import { setFormStudy } from 'store/slices/formStudySlice'
 
 interface FormStudySelectProps extends FormProps {
 
