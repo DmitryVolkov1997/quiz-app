@@ -32,6 +32,7 @@ export const ContactForm = () => {
 		},
 	})
 	const [isLoading, setIsLoading] = useState(false)
+	const [isUser, setIsUser] = useState(true)
 
 	const onSubmit: SubmitHandler<FormDataTypes> = async (data) => {
 		if (isLoading) {
@@ -52,7 +53,10 @@ export const ContactForm = () => {
 					isClosable: true,
 					position: "top"
 				})
+
+				setIsUser(true)
 			} else {
+				setIsUser(false)
 				const applicantData = transformObject(data)
 				dispatch(setStudent(applicantData))
 
@@ -63,6 +67,7 @@ export const ContactForm = () => {
 		} finally {
 			setIsLoading(false)
 		}
+
 		reset()
 	}
 
@@ -82,9 +87,8 @@ export const ContactForm = () => {
 				register={register}
 				errors={errors}
 				isValid={isValid}
-				isSubmitSuccessful={isSubmitSuccessful}
+				isSubmitSuccessful={isUser}
 				isLoading={isLoading}
-				setIsLoading={setIsLoading}
 			/>
 		</Box>
 	)

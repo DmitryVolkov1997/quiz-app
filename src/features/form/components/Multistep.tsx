@@ -8,10 +8,9 @@ interface MultistepProps extends FormProps {
 	isValid: boolean
 	isSubmitSuccessful: boolean
 	isLoading: boolean
-	setIsLoading: Dispatch<SetStateAction<boolean>>
 }
 
-export const Multistep = ({register, errors, isValid, isSubmitSuccessful, isLoading, setIsLoading}: MultistepProps) => {
+export const Multistep = ({register, errors, isValid, isSubmitSuccessful, isLoading}: MultistepProps) => {
 	const toast = useToast()
 	const [step, setStep] = useState(1)
 	const [progress, setProgress] = useState(33.33)
@@ -84,7 +83,7 @@ export const Multistep = ({register, errors, isValid, isSubmitSuccessful, isLoad
 						isLoading={isLoading}
 						disabled={isLoading}
 						onClick={() => {
-							if (isSubmitSuccessful) {
+							if (!isSubmitSuccessful) {
 								toast({
 									title: 'Спасибо за регистрацию!',
 									status: 'success',
