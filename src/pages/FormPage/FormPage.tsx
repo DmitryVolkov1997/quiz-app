@@ -2,9 +2,10 @@ import React from 'react'
 import styles from './FormPage.module.sass'
 import {Layout} from 'layout/Layout'
 import {ContactForm} from 'features'
-import {Box, Button, Heading, Text, useMediaQuery} from '@chakra-ui/react'
+import {Box, Button, Heading, ListItem, OrderedList, Text, useMediaQuery} from '@chakra-ui/react'
 import {Link} from 'react-router-dom'
 import {buttons} from 'pages/FormPage/buttons'
+import {listItems} from 'pages/FormPage/listItems'
 
 export const FormPage = () => {
 	return (
@@ -60,10 +61,32 @@ export const FormPage = () => {
 						</Box>
 					</Box>
 
-					<Box>
-						<Text>
-							После регистрации, в Личном кабинете вам будут доступны тесты Образовательных программ, тесты по предметам ЕНТ
+					<Box
+						className={styles.formBottom}
+						fontFamily="Raleway"
+						fontWeight="extrabold"
+						fontStyle="italic"
+					>
+						<Text
+							className={styles.formBottomTitle}
+							fontWeight="extrabold"
+							fontStyle="italic"
+							mb={3}
+						>
+							После регистрации, в Личном кабинете вам будут доступны тесты Образовательных программ,
+							тесты по предметам ЕНТ
 						</Text>
+
+						<OrderedList className={styles.formBottomList}>
+							{listItems.map(item => (
+								<ListItem
+									key={item.id}
+									className={styles.formBottomItem}
+								>
+									{item.label}
+								</ListItem>
+							))}
+						</OrderedList>
 					</Box>
 				</Box>
 			</Box>
