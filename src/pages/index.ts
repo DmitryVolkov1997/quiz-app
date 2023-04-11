@@ -1,2 +1,2 @@
-export * from 'pages/FormPage/FormPage'
+export * from './FormPage/FormPage'
 export * from './HomePage/HomePage'

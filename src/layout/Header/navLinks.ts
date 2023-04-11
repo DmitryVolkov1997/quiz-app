@@ -6,4 +6,6 @@ type Link = {
 export const navLinks: Link[] = [
 	{id: 1, label: 'Регистрация', to: '/'},
 	{id: 2, label: 'Пробное тестирование', to: '/quizzes'},
+	{id: 3, label: 'Админка', to: '/quizzes'},
+
 ]
