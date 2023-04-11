@@ -1,5 +1,5 @@
 import React from 'react'
-import {Box, FormControl, Heading, Input} from '@chakra-ui/react'
+import {Box, FormControl, Heading, Input, Text} from '@chakra-ui/react'
 import {inputs, registerName} from 'features/index'
 import {FormDataTypes, FormProps} from 'types/index'
 import {RegisterOptions} from 'react-hook-form'
@@ -11,9 +11,11 @@ export const StepOne = ({register, errors}: StepOneProps) => {
 	return (
 		<>
 			<Heading
+				fontFamily="Open Sans"
 				w="100%"
 				textAlign="center"
-				fontWeight="medium"
+				fontWeight="bold"
+				fontStyle={'italic'}
 				mb="2%">
 				Регистрация
 			</Heading>

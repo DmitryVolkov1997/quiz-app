@@ -1,4 +1,45 @@
-.wrapper
-  display: flex
-  justify-content: center
+.form
+  display: grid
+  grid-template-columns: auto minmax(320px, 1440px) auto
+
+  &Row
+    display: grid
+    grid-column: 2/3
+    padding: 0 30px
+
+  &Top
+    text-align: center
+    margin-bottom: 90px
+    border-collapse: separate
+    border-bottom-width: 1px
+    padding-bottom: 20px
+
+  &Title
+    margin-bottom: 10px
+
+  &Right
+    display: grid
+    grid-template-columns: 1fr auto
+    justify-content: space-between
+
+  &Info
+    max-width: 320px
+    width: 100%
+    text-align: center
+
+  &InfoText
+    font-size: 30px
+    line-height: 28px
+    font-style: italic
+    font-weight: 500
+    margin-bottom: 20px
+
+  &InfoList
+    display: flex
+    flex-direction: column
+    gap: 15px
+
+  &InfoLink
+    display: block
+    width: 100%
 
