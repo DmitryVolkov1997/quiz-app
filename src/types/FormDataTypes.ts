@@ -5,9 +5,9 @@ export type FormDataTypes = {
 	email: string
 	phone: string
 	birthday: Date
-	statuses: string
-	regions: string
-	cities: string
+	status: string
+	region: string
+	city: string
 	institutionType: string
 	educationInstitution: string
 	achievement: string

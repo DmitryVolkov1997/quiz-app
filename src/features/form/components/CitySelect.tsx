@@ -30,7 +30,7 @@ export const CitySelect = ({register, errors}: CitySelectProps) => {
 			<Select
 				placeholder="Қала/кент/ауыл (Город/поселок/село)"
 				size="md"
-				{...register("cities", {
+				{...register("city", {
 					required: "Обязательное поле"
 				})}
 				onChange={handleChangeCity}
@@ -46,13 +46,13 @@ export const CitySelect = ({register, errors}: CitySelectProps) => {
 				))}
 			</Select>
 
-			{errors.cities && errors.cities.message && (
+			{errors.city && errors.city.message && (
 				<Box
 					as="strong"
 					color="red"
 					fontWeight="medium"
 				>
-					{errors.cities.message}
+					{errors.city.message}
 				</Box>
 			)}
 		</FormControl>

@@ -6,13 +6,13 @@ import {FormDataTypes} from 'types'
 import {
 	Multistep
 } from './components'
-import {transformObject} from 'utils'
-import {useAppDispatch, useAppSelector} from 'store/redux-hooks'
+import {useAppDispatch} from 'store/redux-hooks'
 import {setStudent} from 'store/slices/studentSlice'
 import {useMutation, useQueryClient} from '@tanstack/react-query'
 import {submitFormData} from 'services'
 import axios from 'axios'
 import {setProgress, setStep} from 'store/slices/contactFormSlice'
+import {transformObject} from '../../utils'
 
 export const ContactForm = () => {
 	const {
@@ -60,7 +60,7 @@ export const ContactForm = () => {
 
 		setIsLoading(true)
 
-		const existingRecord = await axios.get(`/contact_form_data.json?orderBy="Email"&equalTo="${data.email}"`)
+		const existingRecord = await axios.get(`/contact_form_data.json?orderBy="email"&equalTo="${data.email}"`)
 
 		try {
 			if (!!Object.keys(existingRecord.data).length) {

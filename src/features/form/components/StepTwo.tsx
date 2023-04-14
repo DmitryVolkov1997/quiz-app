@@ -6,7 +6,7 @@ import {
 	CitySelect,
 	InstitutionSelect,
 	EducationInstitutionSelect, FormStudySelect, EducationalProgram
-} from 'features/form/components/index'
+} from 'features/form/components'
 import {Heading} from '@chakra-ui/react'
 
 interface StepTwoProps extends FormProps {

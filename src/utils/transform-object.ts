@@ -1,24 +1,24 @@
-import {FormDataTypes, FormDataTypesRus} from 'types'
+import {FormDataTypes} from 'types'
 
-export const transformObject = (data: FormDataTypes): FormDataTypesRus => {
+export const transformObject = (data: FormDataTypes): FormDataTypes => {
 	return {
-		"Имя": data.firstName,
-		"Фамилия": data.lastName,
-		"Отчество": data.patronymic,
-		"Email": data.email,
-		"Телефон": data.phone,
-		"Год рождения": data.birthday,
-		"Социальный статус": data.statuses,
-		"Регион": data.regions,
-		"Город": data.cities,
-		"Вид учебного заведения": data.institutionType,
-		"Учебное заведение": data.educationInstitution,
-		"Форма обучения": data.formStudy,
-		"Образовательная программа": data.educationalProgram,
-		"Награды и достижения": data.achievement,
-		"Форма оплаты": data.formPayment,
-		"Язык обучения": data.language,
-		"Кафедра консультант": data.consultant,
-		"Вопрос": data.question,
+		firstName: `${data.firstName.slice(0, 1).toUpperCase()}${data.firstName.slice(1)}`,
+		lastName: `${data.lastName.slice(0, 1).toUpperCase()}${data.lastName.slice(1)}`,
+		patronymic: data.patronymic ? `${data.patronymic.slice(0, 1).toUpperCase()}${data.patronymic.slice(1)}` : "не указано",
+		email: data.email,
+		phone: data.phone,
+		birthday: data.birthday,
+		status: data.status,
+		region: data.region,
+		city: data.city,
+		institutionType: data.institutionType,
+		educationInstitution: data.educationInstitution,
+		formStudy: data.formStudy,
+		educationalProgram: data.educationalProgram,
+		achievement: data.achievement,
+		formPayment: data.formPayment,
+		language: data.language,
+		consultant: data.consultant,
+		question: data.question ? data.question : "нет вопросов"
 	}
 }

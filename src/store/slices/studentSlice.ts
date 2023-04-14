@@ -1,8 +1,8 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {FormDataTypesRus} from 'types'
+import {FormDataTypes} from 'types'
 
 type StudentSlice = {
-	student: null | FormDataTypesRus
+	student: null | FormDataTypes
 }
 
 const initialState: StudentSlice = {
@@ -13,7 +13,7 @@ const studentSlice = createSlice({
 	name: "student",
 	initialState,
 	reducers: {
-		setStudent(state, action: PayloadAction<FormDataTypesRus | null>) {
+		setStudent(state, action: PayloadAction<FormDataTypes | null>) {
 			state.student = action.payload
 		}
 	}

@@ -29,7 +29,7 @@ export const RegionSelect = ({register, errors}: RegionSelectProps) => {
 			<Select
 				placeholder="Аймақ (Регион)"
 				size="md"
-				{...register("regions", {
+				{...register("region", {
 					required: "Обязательное поле"
 				})}
 				onChange={handleRegion}
@@ -45,13 +45,13 @@ export const RegionSelect = ({register, errors}: RegionSelectProps) => {
 				))}
 			</Select>
 
-			{errors.regions && errors.regions.message && (
+			{errors.region && errors.region.message && (
 				<Box
 					as="strong"
 					color="red"
 					fontWeight="medium"
 				>
-					{errors.regions.message}
+					{errors.region.message}
 				</Box>
 			)}
 		</FormControl>

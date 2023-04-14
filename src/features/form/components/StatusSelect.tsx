@@ -14,7 +14,7 @@ export const StatusSelect = ({register, errors}: StatusSelectProps) => {
 			<Select
 				placeholder="Социальный статус"
 				size="md"
-				{...register("statuses", {
+				{...register("status", {
 					required: "Обязательное поле"
 				})}
 			>
@@ -27,13 +27,13 @@ export const StatusSelect = ({register, errors}: StatusSelectProps) => {
 				))}
 			</Select>
 
-			{errors.statuses && (
+			{errors.status && (
 				<Box
 					as="strong"
 					color="red"
 					fontWeight="medium"
 				>
-					{errors.statuses.message}
+					{errors.status.message}
 				</Box>
 			)}
 		</FormControl>
