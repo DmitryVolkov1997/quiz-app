@@ -1,20 +1,34 @@
 import {TableContainer, Tbody, Td, Th, Thead, Tr, Table} from "@chakra-ui/table"
-import React from 'react'
+import React, {useMemo} from 'react'
 import styles from "./ApplicantTable.module.sass"
 import {Applicant, FormDataTypes} from 'types'
 import {Column, usePagination, useTable} from 'react-table'
-import {Box, Button, ButtonGroup, Select} from '@chakra-ui/react'
-import {ArrowBackIcon, ArrowForwardIcon, ArrowLeftIcon, ArrowRightIcon} from "@chakra-ui/icons"
+import {Box, Button, Select} from '@chakra-ui/react'
+import {ArrowBackIcon, ArrowForwardIcon, ArrowLeftIcon, ArrowRightIcon, DeleteIcon} from "@chakra-ui/icons"
+import {useMutation, useQueryClient} from '@tanstack/react-query'
+import {deleteApplicant} from 'services'
+import {motion} from "framer-motion"
 
 interface ApplicantTableProps {
 	applicants: Applicant[]
 }
 
-
 export const ApplicantTable = ({applicants}: ApplicantTableProps) => {
+	const queryClient = useQueryClient()
+	const {mutateAsync} = useMutation({
+		mutationFn: deleteApplicant,
+		onSuccess: () => {
+			queryClient.invalidateQueries({queryKey: ["applicants"]}).then(r => console.log(r))
+		}
+	})
+
 	const columns: readonly
-		Column<FormDataTypes>[] = React.useMemo(
+		Column<FormDataTypes & { id: string }>[] = useMemo(
 		() => [
+			{
+				Header: 'id',
+				accessor: 'id',
+			},
 			{
 				Header: 'Имя',
 				accessor: 'firstName',
@@ -109,18 +123,27 @@ export const ApplicantTable = ({applicants}: ApplicantTableProps) => {
 		initialState: {pageIndex: 0, pageSize: 7},
 	}, usePagination)
 
+	const MotionTd = motion(Td)
+	const MotionTr = motion(Tr)
+
+	const handleDelete = (id: string) => {
+		mutateAsync(id).then(r => console.log(r))
+	}
+
 	return (
 		<TableContainer boxShadow="2xl" rounded="md">
 			<Table {...getTableProps()}>
+
 				<Thead>
 					{headerGroups.map((headerGroup) => (
-						<Tr {...headerGroup.getHeaderGroupProps()}>
+						<Tr
+							{...headerGroup.getHeaderGroupProps()}
+						>
 							{headerGroup.headers.map((column) => (
 								<Th
 									{...column.getHeaderProps()}
 									fontSize="medium" background={"linkedin.800"}
 									color="white"
-									textAlign="center"
 								>
 									{column.render('Header')}
 								</Th>
@@ -128,23 +151,51 @@ export const ApplicantTable = ({applicants}: ApplicantTableProps) => {
 						</Tr>
 					))}
 				</Thead>
+
 				<Tbody {...getTableBodyProps()}>
-					{page.map((row) => {
+					{page.filter(Boolean).map((row) => {
+						if (!row) {
+							return null
+						}
+
 						prepareRow(row)
+
+						const id: string = row.cells ? row.cells.find((cell) => cell.column.id === 'id')?.value ?? '' : ''
+
 						return (
-							<Tr {...row.getRowProps()}>
-								{row.cells.map((cell) => {
+							<MotionTr
+								{...row.getRowProps()}
+								initial={{opacity: 0, y: -10}}
+								animate={{opacity: 1, y: 0}}
+								transition={{duration: 0.5}}
+							>
+								{row.cells.map((cell, index) => {
 									return (
-										<Td {...cell.getCellProps()} textAlign="center"
+										<MotionTd {...cell.getCellProps()}
+												  initial={{opacity: 0, x: -10}}
+												  animate={{opacity: 1, x: 0}}
+												  transition={{duration: 0.5}}
 										>
-											{cell.render('Cell')}
-										</Td>
+											{index === 0 ? (
+												<Button
+													onClick={() => handleDelete(id)}
+													colorScheme="red"
+													w={6}
+													h={8}
+													mr={4}
+												>
+													<DeleteIcon fontSize="md"/>
+												</Button>
+											) : cell.render('Cell')}
+										</MotionTd>
 									)
 								})}
-							</Tr>
+							</MotionTr>
 						)
 					})}
+
 				</Tbody>
+
 			</Table>
 
 			<Box
@@ -160,7 +211,6 @@ export const ApplicantTable = ({applicants}: ApplicantTableProps) => {
 
 				<Box className={styles.buttonGroup}>
 
-					{/*working start*/}
 					<Button
 						onClick={() => gotoPage(0)} disabled={!canPreviousPage}
 						background={"transparent"}
@@ -174,6 +224,7 @@ export const ApplicantTable = ({applicants}: ApplicantTableProps) => {
 					>
 						<ArrowBackIcon fontSize="2xl"/>
 					</Button>
+
 					<Button
 						onClick={() => nextPage()} disabled={!canNextPage}
 						background={"transparent"}
@@ -189,11 +240,8 @@ export const ApplicantTable = ({applicants}: ApplicantTableProps) => {
 						<ArrowRightIcon fontSize="md"/>
 					</Button>
 
-
-
-					{/*working end*/}
-
 				</Box>
+
 				<Box className={styles.pageCount} as="span">
 					Страница&nbsp;
 

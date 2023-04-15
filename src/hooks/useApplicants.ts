@@ -9,7 +9,12 @@ export const useApplicants = () => {
 		queryFn: getApplicants,
 		queryKey: ["applicants"],
 		select({data}) {
-			return data
+			return Object.values(data).map((applicant, idx) => {
+				return {
+					...applicant,
+					id: Object.keys(data)[idx],
+				}
+			})
 		},
 		onError(error) {
 			if (error instanceof Error) {
