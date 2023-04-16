@@ -1,5 +1,5 @@
 import { ArrowBackIcon, ArrowForwardIcon, ArrowLeftIcon, ArrowRightIcon, DeleteIcon, DownloadIcon } from "@chakra-ui/icons"
-import { Box, Button, Select } from '@chakra-ui/react'
+import { Box, Button, Select, useColorMode } from '@chakra-ui/react'
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/table"
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { motion } from "framer-motion"
@@ -22,6 +22,7 @@ export const ApplicantTable = ({ applicants }: ApplicantTableProps) => {
 			queryClient.invalidateQueries({ queryKey: ["applicants"] }).then(r => console.log(r))
 		}
 	})
+	const { colorMode } = useColorMode()
 
 	const columns: readonly
 		Column<FormDataTypes & { id: string }>[] = useMemo(
@@ -53,6 +54,10 @@ export const ApplicantTable = ({ applicants }: ApplicantTableProps) => {
 				{
 					Header: 'Дата рождения',
 					accessor: 'birthday',
+				},
+				{
+					Header: 'Дата регистрации',
+					accessor: 'created_at',
 				},
 				{
 					Header: 'Социальный статус',
@@ -106,7 +111,6 @@ export const ApplicantTable = ({ applicants }: ApplicantTableProps) => {
 		getTableProps,
 		getTableBodyProps,
 		headerGroups,
-		rows,
 		prepareRow,
 		page,
 		canPreviousPage,
@@ -121,7 +125,7 @@ export const ApplicantTable = ({ applicants }: ApplicantTableProps) => {
 	} = useTable({
 		columns,
 		data: applicants,
-		initialState: { pageIndex: 0, pageSize: 7 },
+		initialState: { pageIndex: 0, pageSize: 10 },
 	}, usePagination)
 
 	const MotionTd = motion(Td)
@@ -161,79 +165,94 @@ export const ApplicantTable = ({ applicants }: ApplicantTableProps) => {
 	}, [applicants])
 
 	return (
-		<TableContainer
-			boxShadow="2xl"
-			rounded="md"
-		>
-			<Table {...getTableProps()}>
+		<>
+			<TableContainer
+				boxShadow="2xl"
+				rounded="md"
+				overflowY="scroll"
+				h="60vh"
+			>
+				<Table
+					{...getTableProps()}
+				>
 
-				<Thead>
-					{headerGroups.map((headerGroup) => (
-						<Tr
-							{...headerGroup.getHeaderGroupProps()}
-						>
-							{headerGroup.headers.map((column) => (
-								<Th
-									{...column.getHeaderProps()}
-									fontSize="medium" background={"linkedin.800"}
-									color="white"
-								>
-									{column.render('Header')}
-								</Th>
-							))}
-						</Tr>
-					))}
-				</Thead>
-
-				<Tbody {...getTableBodyProps()}>
-					{page.filter(Boolean).map((row) => {
-						if (!row) {
-							return null
-						}
-
-						prepareRow(row)
-
-						const id: string = row.cells ? row.cells.find((cell) => cell.column.id === 'id')?.value ?? '' : ''
-
-						return (
-							<MotionTr
-								{...row.getRowProps()}
-								initial={{ opacity: 0, y: -10 }}
-								animate={{ opacity: 1, y: 0 }}
-								transition={{ duration: 0.5 }}
+					<Thead>
+						{headerGroups.map((headerGroup) => (
+							<Tr
+								{...headerGroup.getHeaderGroupProps()}
 							>
-								{row.cells.map((cell, index) => {
-									return (
-										<MotionTd {...cell.getCellProps()}
-											initial={{ opacity: 0, x: -10 }}
-											animate={{ opacity: 1, x: 0 }}
-											transition={{ duration: 0.5 }}
-										>
-											{index === 0 ? (
-												<Button
-													onClick={() => handleDelete(id)}
-													colorScheme="red"
-													w={6}
-													h={8}
-													mr={4}
-												>
-													<DeleteIcon fontSize="md" />
-												</Button>
-											) : cell.render('Cell')}
-										</MotionTd>
-									)
-								})}
-							</MotionTr>
-						)
-					})}
+								{headerGroup.headers.map((column) => (
+									<Th
+										{...column.getHeaderProps()}
+										fontSize="medium" background={"linkedin.800"}
+										color="white"
+										whiteSpace="pre-wrap"
+										textAlign="center"
+									>
+										{column.render('Header')}
+									</Th>
+								))}
+							</Tr>
+						))}
+					</Thead>
 
-				</Tbody>
+					<Tbody {...getTableBodyProps()}>
+						{page.filter(Boolean).map((row) => {
+							if (!row) {
+								return null
+							}
 
-			</Table>
+							prepareRow(row)
+
+							const id: string = row.cells ? row.cells.find((cell) => cell.column.id === 'id')?.value ?? '' : ''
+
+							return (
+								<MotionTr
+									{...row.getRowProps()}
+									initial={{ opacity: 0, y: -10 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ duration: 0.5 }}
+								>
+									{row.cells.map((cell, index) => {
+										return (
+											<MotionTd {...cell.getCellProps()}
+												initial={{ opacity: 0, x: -10 }}
+												animate={{ opacity: 1, x: 0 }}
+												transition={{ duration: 0.5 }}
+												whiteSpace="pre-wrap"
+												textAlign="center"
+												w="auto"
+											>
+												{index === 0 ? (
+													<Button
+														onClick={() => handleDelete(id)}
+														colorScheme="red"
+														w={6}
+														h={8}
+														mr={4}
+													>
+														<DeleteIcon fontSize="md" />
+													</Button>
+												) : cell.render('Cell')}
+											</MotionTd>
+										)
+									})}
+								</MotionTr>
+							)
+						})}
+
+					</Tbody>
+
+				</Table>
+			</TableContainer >
 
 			<Box
 				className={styles.pagination}
+				boxShadow="2xl"
+				bg={colorMode === 'dark' ? '' : 'white'}
+				rounded="md"
 			>
+
 				<Select
 					value={pageSize}
 					onChange={(e) => setPageSize(Number(e.target.value))}>
@@ -296,7 +315,7 @@ export const ApplicantTable = ({ applicants }: ApplicantTableProps) => {
 				</Box>
 
 			</Box>
-		</TableContainer >
+		</>
 	)
 }
 
